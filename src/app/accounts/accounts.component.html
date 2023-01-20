@@ -1,0 +1,87 @@
+<h1> Accounts table</h1>
+<p><button nz-button [nzType]="'primary'" routerLink="/login" style="width: 25%;align-self: center;">Log out</button></p>
+  <nz-table #sortTable [nzData]="result" nzTableLayout="fixed">
+        <thead>
+          <tr>
+            <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare">
+              {{ column.title }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of sortTable.data;">
+            <td>{{ data.name }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.password }}</td>
+            <td>{{ data.loc }}</td>
+            <td>{{ data.gender }}</td>
+            <td><button nz-button (click)="deleteRow(data.id)">Delete</button></td>
+          </tr>
+        </tbody>
+  </nz-table>
+  <br>
+
+
+  <h1 style="padding-left: 38%;"> Accounts filters (Case sensitive) </h1>
+  <div class="cont">
+  <p><button nz-button nz-type="'primary'" style="width: 25%;align-self: center" nz-button (click)="displayAll()"><span>DISPLAY ALL OF THE ACCOUNTS</span></button></p>
+  <p><input nz-input [(ngModel)]="Filt1" style="width: 25%;" placeholder="Enter name info" id="Filt1"/></p>
+  <p><button style="width: 25%;align-self: center" nz-button (click)="filterAccountsName()"><span>Filter list of accounts by name</span></button></p>
+  <p><input nz-input [(ngModel)]="Filt2" style="width: 25%;" placeholder="Enter email info" id="Filt2"/></p>
+  <p><button style="width: 25%;align-self: center" nz-button (click)="filterAccountsEmail()"><span>Filter list of accounts by email</span></button></p>
+  <p><input nz-input [(ngModel)]="Filt3" style="width: 25%;" placeholder="Enter password info" id="Filt3"/></p>
+  <p><button style="width: 25%;align-self: center" nz-button (click)="filterAccountsPassword()"><span>Filter list of accounts by password</span></button></p>
+  <p><input nz-input [(ngModel)]="Filt4" style="width: 25%;" placeholder="Enter location info" id="Filt4"/></p>
+  <p><button style="width: 25%;align-self: center" nz-button (click)="filterAccountsLocation()"><span>Filter list of accounts by location</span></button></p>
+  <p><input nz-input [(ngModel)]="Filt5" style="width: 25%;" placeholder="Enter gender info (Male or Female)" id="Filt5"/></p>
+  <p><button style="width: 25%;align-self: center" nz-button (click)="filterAccountsGender()"><span>Filter list of accounts by gender</span></button></p>
+  <p *ngIf="showAccountFilter" style="color: green; padding-left: 6px;"> Accounts table has been filtered!</p>
+  <p *ngIf="showFilterFailure" style="color: red; padding-left: 13px;">Accounts table wasn't filtered!</p>
+  <p *ngIf="showFilterFailure" style="color: red; padding-left: 61px;">Filter is empty!</p>
+  <br>
+  </div>
+
+  <div class="container">
+  <form nz-form [formGroup]="accountForm" class="form" style="align-self: center; justify-self: center;" (ngSubmit)="addRow()">
+    <h1>New account creation</h1>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Name is missing or invalid">
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input type="text" placeholder="Name" [formControl]="name" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Email is missing or invalid">
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input type="email" placeholder="E-mail" [formControl]="email" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Write Male or Female">
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input type="text" placeholder="Gender" [formControl]="gender"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Location is missing or invalid">
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input type="loc" placeholder="Location" [formControl]="loc"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Password should have at least 6 characters">
+            <nz-input-group nzPrefixIcon="lock">
+              <input nz-input type="password" placeholder="Password" [formControl]="password" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <input nz-input type="submit" value="Enter account">
+        <p *ngIf="showAccountAddition" style="padding-top: 20px; color: green;">Account addition was successful!</p>
+        <p *ngIf="showAccountFailure" style="padding-top: 20px; color: red;">Account addition was not successful!</p>
+      </form>
+    </div>
+    <p style="padding-bottom: 10px; padding-left: 44%;"><button nz-button [nzType]="'primary'" routerLink="/login" style="width: 25%;align-items: center; justify-content: center;">Log out</button></p>
